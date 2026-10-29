@@ -1,0 +1,8 @@
+[
+  {
+    "AllowedOrigins": ["https://toxic-express.app"],
+    "AllowedMethods": ["PUT"],
+    "AllowedHeaders": ["Content-Type"],
+    "MaxAgeSeconds": 3600
+  }
+]

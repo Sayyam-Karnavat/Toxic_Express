@@ -1,0 +1,162 @@
+/*
+ * Toxic-Express design tokens. Source of truth: /DESIGN.md.
+ * This is the ONLY file allowed to contain raw colour values (enforced by scripts/check-tokens.mjs).
+ */
+@import "tailwindcss";
+
+@theme {
+  /* Colours (DESIGN.md `colors`) */
+  --color-primary: #5865f2;
+  --color-on-primary: #ffffff;
+  --color-green: #35ed7e;
+  --color-magenta: #ec48bd;
+  --color-link-cyan: #00b0f4; /* DESIGN.md colors.link ("Link Cyan") */
+  --color-canvas: #0a0d3a;
+  --color-surface-indigo: #1e2353;
+  --color-surface-onyx: #23272a;
+  --color-surface-black: #000000;
+  --color-ink: #ffffff;
+  --color-ink-dark: #000000;
+  --color-muted: #333333;
+  --color-hairline: #23272a;
+
+  /* Derived tokens (not in DESIGN.md; added for accessibility, each checked >= 4.5:1) */
+  --color-magenta-strong: #b8307f; /* small white text on magenta: 5.6:1 */
+  --color-surface-raised: #2a2f6b; /* hover / selected state on surface-indigo */
+  --color-ink-soft: #c7cae8; /* secondary text: 9.2:1 on surface-indigo */
+  --color-ink-faint: #a3a8da; /* tertiary text: 6.5:1 on surface-indigo */
+  --color-danger: #ff8a9a; /* error text: 6.6:1 on surface-indigo */
+  --color-indigo-line: #353b7a; /* subtle borders on dark surfaces */
+
+  /* Google sign-in branding (Google's guidelines, exempt from DESIGN.md) */
+  --color-google-surface: #ffffff;
+  --color-google-border: #747775;
+  --color-google-text: #1f1f1f;
+  --color-google-blue: #4285f4;
+  --color-google-green: #34a853;
+  --color-google-yellow: #fbbc05;
+  --color-google-red: #ea4335;
+
+  /* Typography (open substitutes recommended by DESIGN.md) */
+  --font-display: "Space Grotesk", "Hanken Grotesk", system-ui, sans-serif;
+  --font-sans: "Inter", "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --text-display-xl: 82px;
+  --text-display-xl--line-height: 1;
+  --text-display-lg: 62px;
+  --text-display-lg--line-height: 1.05;
+  --text-display-md: 56px;
+  --text-display-md--line-height: 1.05;
+  --text-heading-lg: 48px;
+  --text-heading-lg--line-height: 1.1;
+  --text-heading-sm: 22px;
+  --text-heading-sm--line-height: 1.2;
+  --text-body-lg: 20px;
+  --text-body-lg--line-height: 1.4;
+  --text-link-lg: 18px;
+  --text-link-lg--line-height: 1.4;
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+  --text-link: 16px;
+  --text-link--line-height: 1.4;
+  --text-link-sm: 14px;
+  --text-link-sm--line-height: 1.4;
+
+  /* Radii (DESIGN.md `rounded`) */
+  --radius-xs: 6px;
+  --radius-sm: 12px;
+  --radius-md: 14px;
+  --radius-lg: 16px;
+  --radius-xl: 40px;
+  --radius-pill: 50px;
+  --radius-jumbo: 120px;
+
+  /* Spacing (DESIGN.md `spacing`) */
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+  --spacing-section: 40px;
+
+  /* Elevation: the single soft violet float from DESIGN.md */
+  --shadow-float: 0 3px 68px rgba(69, 42, 124, 0.1);
+  --shadow-modal: 0 3px 68px rgba(69, 42, 124, 0.35);
+
+  --breakpoint-tablet: 768px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-desktop: 1280px;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html,
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-link-cyan);
+    outline-offset: 2px;
+  }
+  a {
+    color: inherit;
+  }
+}
+
+/* Signature animated Blurple -> violet -> magenta mesh (DESIGN.md "Brand Gradient"). */
+.mesh-bg {
+  background-color: var(--color-canvas);
+  background-image:
+    radial-gradient(60% 50% at 15% 20%, color-mix(in srgb, var(--color-primary) 55%, transparent), transparent 70%),
+    radial-gradient(50% 45% at 85% 30%, color-mix(in srgb, var(--color-magenta) 45%, transparent), transparent 70%),
+    radial-gradient(55% 60% at 50% 100%, color-mix(in srgb, var(--color-primary) 35%, var(--color-magenta) 20%), transparent 70%);
+  background-size: 160% 160%;
+  animation: mesh-drift 18s ease-in-out infinite alternate;
+}
+
+.gradient-panel {
+  background-image: linear-gradient(135deg, var(--color-magenta), color-mix(in srgb, var(--color-magenta) 55%, var(--color-primary)));
+}
+
+@keyframes mesh-drift {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.reaction-pop {
+  animation: pop 260ms ease-out;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mesh-bg,
+  .marquee-track,
+  .reaction-pop {
+    animation: none;
+  }
+}

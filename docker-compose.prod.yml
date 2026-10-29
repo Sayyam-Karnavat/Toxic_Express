@@ -1,0 +1,59 @@
+# Production stack for a single VM (e.g. Oracle Cloud Always Free ARM): API, worker, Redis, Caddy.
+# Postgres is managed (Neon), media lives in Cloudflare R2, the frontend is on Cloudflare Pages.
+# Usage: cp backend/.env.example backend/.env (fill in, ENV=prod) && docker compose -f docker-compose.prod.yml up -d --build
+name: toxic-express
+
+x-app: &app
+  build: ./backend
+  env_file: ./backend/.env
+  environment:
+    ENV: prod
+    REDIS_URL: redis://redis:6379/0
+  restart: unless-stopped
+  depends_on:
+    redis: { condition: service_healthy }
+
+services:
+  migrate:
+    <<: *app
+    command: ["alembic", "upgrade", "head"]
+    restart: "no"
+
+  api:
+    <<: *app
+    depends_on:
+      redis: { condition: service_healthy }
+      migrate: { condition: service_completed_successfully }
+    expose: ["8000"]
+
+  worker:
+    <<: *app
+    command: ["arq", "worker.WorkerSettings"]
+    depends_on:
+      redis: { condition: service_healthy }
+      migrate: { condition: service_completed_successfully }
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "noeviction"]
+    volumes: [redisdata:/data]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  caddy:
+    image: caddy:2-alpine
+    ports: ["80:80", "443:443"]
+    environment:
+      API_DOMAIN: ${API_DOMAIN:?set API_DOMAIN, e.g. api.toxic-express.app}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddydata:/data
+    depends_on: [api]
+    restart: unless-stopped
+
+volumes:
+  redisdata:
+  caddydata:

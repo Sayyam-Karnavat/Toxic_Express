@@ -1,0 +1,6046 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Toxic-Express API",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/api/v1/auth/signup": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Signup",
+    "operationId": "signup_api_v1_auth_signup_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SignupIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TokenOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/login": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Login",
+    "operationId": "login_api_v1_auth_login_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/LoginIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TokenOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/refresh": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Refresh",
+    "operationId": "refresh_api_v1_auth_refresh_post",
+    "parameters": [
+     {
+      "name": "te_refresh",
+      "in": "cookie",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Te Refresh"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TokenOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/logout": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Logout",
+    "operationId": "logout_api_v1_auth_logout_post",
+    "parameters": [
+     {
+      "name": "te_refresh",
+      "in": "cookie",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Te Refresh"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/logout-all": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Logout All",
+    "operationId": "logout_all_api_v1_auth_logout_all_post",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/verify-email": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Verify Email",
+    "operationId": "verify_email_api_v1_auth_verify_email_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/TokenIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/resend-verification": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Resend Verification",
+    "operationId": "resend_verification_api_v1_auth_resend_verification_post",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/forgot-password": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Forgot Password",
+    "operationId": "forgot_password_api_v1_auth_forgot_password_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/EmailIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "202": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/reset-password": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Reset Password",
+    "operationId": "reset_password_api_v1_auth_reset_password_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ResetPasswordIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/password": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Set Password",
+    "operationId": "set_password_api_v1_auth_password_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SetPasswordIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/google/login": {
+   "get": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Google Login Start",
+    "operationId": "google_login_start_api_v1_auth_google_login_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/google/link-url": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Google Link Url",
+    "operationId": "google_link_url_api_v1_auth_google_link_url_post",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AuthUrlOut"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/google": {
+   "delete": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Google Unlink",
+    "operationId": "google_unlink_api_v1_auth_google_delete",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me": {
+   "get": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Get Me",
+    "operationId": "get_me_api_v1_me_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MeOut"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Delete Me",
+    "operationId": "delete_me_api_v1_me_delete",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DeleteAccountIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Update Me",
+    "operationId": "update_me_api_v1_me_patch",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ProfileUpdateIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MeOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/onboarding": {
+   "post": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Onboarding",
+    "operationId": "onboarding_api_v1_me_onboarding_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/OnboardingIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MeOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/email": {
+   "post": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Change Email",
+    "operationId": "change_email_api_v1_me_email_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/EmailChangeIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MeOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/settings": {
+   "get": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Get Settings",
+    "operationId": "get_settings_api_v1_me_settings_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SettingsOut"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Patch Settings",
+    "operationId": "patch_settings_api_v1_me_settings_patch",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SettingsPatchIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SettingsOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/sessions": {
+   "get": {
+    "tags": [
+     "users"
+    ],
+    "summary": "List Sessions",
+    "operationId": "list_sessions_api_v1_me_sessions_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/SessionOut"
+         },
+         "type": "array",
+         "title": "Response List Sessions Api V1 Me Sessions Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/sessions/{session_id}": {
+   "delete": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Revoke Session",
+    "operationId": "revoke_session_api_v1_me_sessions__session_id__delete",
+    "parameters": [
+     {
+      "name": "session_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Session Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/export": {
+   "get": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Export",
+    "operationId": "export_api_v1_me_export_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Export Api V1 Me Export Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/users/{handle}": {
+   "get": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Get Profile",
+    "operationId": "get_profile_api_v1_users__handle__get",
+    "parameters": [
+     {
+      "name": "handle",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Handle"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProfileOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/users/{handle}/follow": {
+   "post": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Follow",
+    "operationId": "follow_api_v1_users__handle__follow_post",
+    "parameters": [
+     {
+      "name": "handle",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Handle"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Unfollow",
+    "operationId": "unfollow_api_v1_users__handle__follow_delete",
+    "parameters": [
+     {
+      "name": "handle",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Handle"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/users/{handle}/block": {
+   "post": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Block",
+    "operationId": "block_api_v1_users__handle__block_post",
+    "parameters": [
+     {
+      "name": "handle",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Handle"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/blocks/{user_id}": {
+   "delete": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Unblock",
+    "operationId": "unblock_api_v1_me_blocks__user_id__delete",
+    "parameters": [
+     {
+      "name": "user_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "User Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/users/{handle}/mute": {
+   "post": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Mute",
+    "operationId": "mute_api_v1_users__handle__mute_post",
+    "parameters": [
+     {
+      "name": "handle",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Handle"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/mutes/{user_id}": {
+   "delete": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Unmute",
+    "operationId": "unmute_api_v1_me_mutes__user_id__delete",
+    "parameters": [
+     {
+      "name": "user_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "User Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/blocks": {
+   "get": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Blocks",
+    "operationId": "blocks_api_v1_me_blocks_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/UserSummary"
+         },
+         "type": "array",
+         "title": "Response Blocks Api V1 Me Blocks Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/mutes": {
+   "get": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Mutes",
+    "operationId": "mutes_api_v1_me_mutes_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/UserSummary"
+         },
+         "type": "array",
+         "title": "Response Mutes Api V1 Me Mutes Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/users/{handle}/followers": {
+   "get": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Followers",
+    "operationId": "followers_api_v1_users__handle__followers_get",
+    "parameters": [
+     {
+      "name": "handle",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Handle"
+      }
+     },
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UserPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/users/{handle}/following": {
+   "get": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Following",
+    "operationId": "following_api_v1_users__handle__following_get",
+    "parameters": [
+     {
+      "name": "handle",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Handle"
+      }
+     },
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UserPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/topics": {
+   "get": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Topics",
+    "operationId": "topics_api_v1_me_topics_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TopicsOut"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Follow Topic",
+    "operationId": "follow_topic_api_v1_me_topics_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/TopicIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TopicsOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/topics/{topic}": {
+   "delete": {
+    "tags": [
+     "social"
+    ],
+    "summary": "Unfollow Topic",
+    "operationId": "unfollow_topic_api_v1_me_topics__topic__delete",
+    "parameters": [
+     {
+      "name": "topic",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Topic"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TopicsOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/posts": {
+   "post": {
+    "tags": [
+     "posts"
+    ],
+    "summary": "Create Post",
+    "operationId": "create_post_api_v1_posts_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PostCreateIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/PostOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonPostOut"
+          }
+         ],
+         "title": "Response Create Post Api V1 Posts Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/posts/{post_id}": {
+   "get": {
+    "tags": [
+     "posts"
+    ],
+    "summary": "Get Post",
+    "operationId": "get_post_api_v1_posts__post_id__get",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Post Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/PostOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonPostOut"
+          }
+         ],
+         "title": "Response Get Post Api V1 Posts  Post Id  Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "posts"
+    ],
+    "summary": "Update Post",
+    "operationId": "update_post_api_v1_posts__post_id__patch",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Post Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PostUpdateIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/PostOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonPostOut"
+          }
+         ],
+         "title": "Response Update Post Api V1 Posts  Post Id  Patch"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "posts"
+    ],
+    "summary": "Delete Post",
+    "operationId": "delete_post_api_v1_posts__post_id__delete",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Post Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/posts/{post_id}/reaction": {
+   "put": {
+    "tags": [
+     "posts"
+    ],
+    "summary": "React",
+    "operationId": "react_api_v1_posts__post_id__reaction_put",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Post Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReactionIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/PostOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonPostOut"
+          }
+         ],
+         "title": "Response React Api V1 Posts  Post Id  Reaction Put"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "posts"
+    ],
+    "summary": "Unreact",
+    "operationId": "unreact_api_v1_posts__post_id__reaction_delete",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Post Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/PostOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonPostOut"
+          }
+         ],
+         "title": "Response Unreact Api V1 Posts  Post Id  Reaction Delete"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/posts/{post_id}/solve": {
+   "post": {
+    "tags": [
+     "posts"
+    ],
+    "summary": "Solve",
+    "operationId": "solve_api_v1_posts__post_id__solve_post",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Post Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SolveIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/PostOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonPostOut"
+          }
+         ],
+         "title": "Response Solve Api V1 Posts  Post Id  Solve Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "posts"
+    ],
+    "summary": "Unsolve",
+    "operationId": "unsolve_api_v1_posts__post_id__solve_delete",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Post Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/PostOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonPostOut"
+          }
+         ],
+         "title": "Response Unsolve Api V1 Posts  Post Id  Solve Delete"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/posts/{post_id}/comments": {
+   "get": {
+    "tags": [
+     "comments"
+    ],
+    "summary": "List Comments",
+    "operationId": "list_comments_api_v1_posts__post_id__comments_get",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Post Id"
+      }
+     },
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CommentPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "comments"
+    ],
+    "summary": "Create Comment",
+    "operationId": "create_comment_api_v1_posts__post_id__comments_post",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Post Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CommentCreateIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/CommentOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonCommentOut"
+          }
+         ],
+         "title": "Response Create Comment Api V1 Posts  Post Id  Comments Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/comments/{comment_id}": {
+   "get": {
+    "tags": [
+     "comments"
+    ],
+    "summary": "Get Comment",
+    "operationId": "get_comment_api_v1_comments__comment_id__get",
+    "parameters": [
+     {
+      "name": "comment_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Comment Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/CommentOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonCommentOut"
+          }
+         ],
+         "title": "Response Get Comment Api V1 Comments  Comment Id  Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "comments"
+    ],
+    "summary": "Update Comment",
+    "operationId": "update_comment_api_v1_comments__comment_id__patch",
+    "parameters": [
+     {
+      "name": "comment_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Comment Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CommentUpdateIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/CommentOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonCommentOut"
+          }
+         ],
+         "title": "Response Update Comment Api V1 Comments  Comment Id  Patch"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "comments"
+    ],
+    "summary": "Delete Comment",
+    "operationId": "delete_comment_api_v1_comments__comment_id__delete",
+    "parameters": [
+     {
+      "name": "comment_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Comment Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/comments/{comment_id}/replies": {
+   "get": {
+    "tags": [
+     "comments"
+    ],
+    "summary": "List Replies",
+    "operationId": "list_replies_api_v1_comments__comment_id__replies_get",
+    "parameters": [
+     {
+      "name": "comment_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Comment Id"
+      }
+     },
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CommentPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/comments/{comment_id}/helpful": {
+   "put": {
+    "tags": [
+     "comments"
+    ],
+    "summary": "Mark Helpful",
+    "operationId": "mark_helpful_api_v1_comments__comment_id__helpful_put",
+    "parameters": [
+     {
+      "name": "comment_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Comment Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/CommentOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonCommentOut"
+          }
+         ],
+         "title": "Response Mark Helpful Api V1 Comments  Comment Id  Helpful Put"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "comments"
+    ],
+    "summary": "Unmark Helpful",
+    "operationId": "unmark_helpful_api_v1_comments__comment_id__helpful_delete",
+    "parameters": [
+     {
+      "name": "comment_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Comment Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/CommentOut"
+          },
+          {
+           "$ref": "#/components/schemas/AnonCommentOut"
+          }
+         ],
+         "title": "Response Unmark Helpful Api V1 Comments  Comment Id  Helpful Delete"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/feed/following": {
+   "get": {
+    "tags": [
+     "feed"
+    ],
+    "summary": "Following",
+    "operationId": "following_api_v1_feed_following_get",
+    "parameters": [
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PostPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/feed": {
+   "get": {
+    "tags": [
+     "feed"
+    ],
+    "summary": "Public Feed",
+    "operationId": "public_feed_api_v1_feed_get",
+    "parameters": [
+     {
+      "name": "sort",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "enum": [
+        "latest",
+        "trending",
+        "solved"
+       ],
+       "type": "string",
+       "default": "latest",
+       "title": "Sort"
+      }
+     },
+     {
+      "name": "category",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "$ref": "#/components/schemas/Category"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Category"
+      }
+     },
+     {
+      "name": "tag",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "pattern": "^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Tag"
+      }
+     },
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PostPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/users/{handle}/posts": {
+   "get": {
+    "tags": [
+     "feed"
+    ],
+    "summary": "User Posts",
+    "operationId": "user_posts_api_v1_users__handle__posts_get",
+    "parameters": [
+     {
+      "name": "handle",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Handle"
+      }
+     },
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PostPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/media/upload-url": {
+   "post": {
+    "tags": [
+     "media"
+    ],
+    "summary": "Upload Url",
+    "operationId": "upload_url_api_v1_media_upload_url_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UploadUrlIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UploadUrlOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/media/{media_id}/complete": {
+   "post": {
+    "tags": [
+     "media"
+    ],
+    "summary": "Complete",
+    "operationId": "complete_api_v1_media__media_id__complete_post",
+    "parameters": [
+     {
+      "name": "media_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Media Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MediaOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/media/{media_id}": {
+   "get": {
+    "tags": [
+     "media"
+    ],
+    "summary": "Status",
+    "operationId": "status_api_v1_media__media_id__get",
+    "parameters": [
+     {
+      "name": "media_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Media Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MediaOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/notifications": {
+   "get": {
+    "tags": [
+     "notifications"
+    ],
+    "summary": "List Notifications",
+    "operationId": "list_notifications_api_v1_notifications_get",
+    "parameters": [
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/NotificationPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/notifications/unread-count": {
+   "get": {
+    "tags": [
+     "notifications"
+    ],
+    "summary": "Unread",
+    "operationId": "unread_api_v1_notifications_unread_count_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UnreadCountOut"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/notifications/read": {
+   "post": {
+    "tags": [
+     "notifications"
+    ],
+    "summary": "Mark Read",
+    "operationId": "mark_read_api_v1_notifications_read_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/MarkReadIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/search": {
+   "get": {
+    "tags": [
+     "search"
+    ],
+    "summary": "Search",
+    "operationId": "search_api_v1_search_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "minLength": 2,
+       "maxLength": 100,
+       "title": "Q"
+      }
+     },
+     {
+      "name": "type",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "enum": [
+        "all",
+        "posts",
+        "users",
+        "tags"
+       ],
+       "type": "string",
+       "default": "all",
+       "title": "Type"
+      }
+     },
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SearchOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/reports": {
+   "post": {
+    "tags": [
+     "safety"
+    ],
+    "summary": "Report",
+    "operationId": "report_api_v1_reports_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReportIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OkOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me/moderation-actions": {
+   "get": {
+    "tags": [
+     "safety"
+    ],
+    "summary": "My Actions",
+    "operationId": "my_actions_api_v1_me_moderation_actions_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/ModActionOut"
+         },
+         "type": "array",
+         "title": "Response My Actions Api V1 Me Moderation Actions Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/appeals": {
+   "post": {
+    "tags": [
+     "safety"
+    ],
+    "summary": "Appeal",
+    "operationId": "appeal_api_v1_appeals_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AppealIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AppealOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/queue": {
+   "get": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Queue",
+    "operationId": "queue_api_v1_admin_queue_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/QueueOut"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/actions": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Act",
+    "operationId": "act_api_v1_admin_actions_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ModActionIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ModActionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/audit": {
+   "get": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Audit",
+    "operationId": "audit_api_v1_admin_audit_get",
+    "parameters": [
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AuditPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/appeals": {
+   "get": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Appeals",
+    "operationId": "appeals_api_v1_admin_appeals_get",
+    "parameters": [
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AppealPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/appeals/{appeal_id}/resolve": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Resolve",
+    "operationId": "resolve_api_v1_admin_appeals__appeal_id__resolve_post",
+    "parameters": [
+     {
+      "name": "appeal_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Appeal Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AppealResolveIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AppealOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/meta": {
+   "get": {
+    "tags": [
+     "meta"
+    ],
+    "summary": "Meta",
+    "operationId": "meta_api_v1_meta_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Meta Api V1 Meta Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "AnonCommentOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "post_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Post Id"
+     },
+     "parent_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Parent Id"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     },
+     "flair": {
+      "$ref": "#/components/schemas/CommentFlair"
+     },
+     "helpful_count": {
+      "type": "integer",
+      "title": "Helpful Count"
+     },
+     "my_helpful": {
+      "type": "boolean",
+      "title": "My Helpful"
+     },
+     "reply_count": {
+      "type": "integer",
+      "title": "Reply Count"
+     },
+     "is_op": {
+      "type": "boolean",
+      "title": "Is Op"
+     },
+     "is_pinned": {
+      "type": "boolean",
+      "title": "Is Pinned"
+     },
+     "is_own": {
+      "type": "boolean",
+      "title": "Is Own"
+     },
+     "deleted": {
+      "type": "boolean",
+      "title": "Deleted"
+     },
+     "moderation_state": {
+      "$ref": "#/components/schemas/ModerationState"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "edited_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Edited At"
+     },
+     "replies": {
+      "items": {
+       "oneOf": [
+        {
+         "$ref": "#/components/schemas/CommentOut"
+        },
+        {
+         "$ref": "#/components/schemas/AnonCommentOut"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Replies"
+     },
+     "is_anonymous": {
+      "type": "boolean",
+      "const": true,
+      "title": "Is Anonymous",
+      "default": true
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "post_id",
+     "parent_id",
+     "body",
+     "flair",
+     "helpful_count",
+     "my_helpful",
+     "reply_count",
+     "is_op",
+     "is_pinned",
+     "is_own",
+     "deleted",
+     "moderation_state",
+     "created_at",
+     "edited_at"
+    ],
+    "title": "AnonCommentOut"
+   },
+   "AnonPostOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     },
+     "category": {
+      "$ref": "#/components/schemas/Category"
+     },
+     "tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Tags"
+     },
+     "frustration_level": {
+      "type": "integer",
+      "title": "Frustration Level"
+     },
+     "status": {
+      "$ref": "#/components/schemas/PostStatus"
+     },
+     "moderation_state": {
+      "$ref": "#/components/schemas/ModerationState"
+     },
+     "content_warning": {
+      "type": "boolean",
+      "title": "Content Warning"
+     },
+     "show_crisis_resources": {
+      "type": "boolean",
+      "title": "Show Crisis Resources"
+     },
+     "media": {
+      "items": {
+       "$ref": "#/components/schemas/MediaOut"
+      },
+      "type": "array",
+      "title": "Media"
+     },
+     "reactions": {
+      "$ref": "#/components/schemas/ReactionCounts"
+     },
+     "my_reaction": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ReactionKind"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "comment_count": {
+      "type": "integer",
+      "title": "Comment Count"
+     },
+     "pinned_comment_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Pinned Comment Id"
+     },
+     "solved_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Solved At"
+     },
+     "link_preview": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Link Preview"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "edited_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Edited At"
+     },
+     "is_own": {
+      "type": "boolean",
+      "title": "Is Own"
+     },
+     "can_edit": {
+      "type": "boolean",
+      "title": "Can Edit"
+     },
+     "is_anonymous": {
+      "type": "boolean",
+      "const": true,
+      "title": "Is Anonymous",
+      "default": true
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "body",
+     "category",
+     "tags",
+     "frustration_level",
+     "status",
+     "moderation_state",
+     "content_warning",
+     "show_crisis_resources",
+     "media",
+     "reactions",
+     "my_reaction",
+     "comment_count",
+     "pinned_comment_id",
+     "solved_at",
+     "link_preview",
+     "created_at",
+     "edited_at",
+     "is_own",
+     "can_edit"
+    ],
+    "title": "AnonPostOut"
+   },
+   "AppealIn": {
+    "properties": {
+     "action_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Action Id"
+     },
+     "message": {
+      "type": "string",
+      "maxLength": 1000,
+      "minLength": 10,
+      "title": "Message"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "action_id",
+     "message"
+    ],
+    "title": "AppealIn"
+   },
+   "AppealOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "user_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "User Id"
+     },
+     "action_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Action Id"
+     },
+     "message": {
+      "type": "string",
+      "title": "Message"
+     },
+     "status": {
+      "$ref": "#/components/schemas/AppealStatus"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "resolved_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Resolved At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "user_id",
+     "action_id",
+     "message",
+     "status",
+     "created_at",
+     "resolved_at"
+    ],
+    "title": "AppealOut"
+   },
+   "AppealPage": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/AppealOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "next_cursor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Next Cursor"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "next_cursor"
+    ],
+    "title": "AppealPage"
+   },
+   "AppealResolveIn": {
+    "properties": {
+     "accept": {
+      "type": "boolean",
+      "title": "Accept"
+     },
+     "note": {
+      "type": "string",
+      "maxLength": 500,
+      "title": "Note",
+      "default": ""
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "accept"
+    ],
+    "title": "AppealResolveIn"
+   },
+   "AppealStatus": {
+    "type": "string",
+    "enum": [
+     "open",
+     "accepted",
+     "rejected"
+    ],
+    "title": "AppealStatus"
+   },
+   "AuditPage": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/ModActionOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "next_cursor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Next Cursor"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "next_cursor"
+    ],
+    "title": "AuditPage"
+   },
+   "AuthUrlOut": {
+    "properties": {
+     "url": {
+      "type": "string",
+      "title": "Url"
+     }
+    },
+    "type": "object",
+    "required": [
+     "url"
+    ],
+    "title": "AuthUrlOut"
+   },
+   "Category": {
+    "type": "string",
+    "enum": [
+     "work",
+     "tech",
+     "money",
+     "relationships",
+     "health",
+     "customer_service",
+     "commute",
+     "life"
+    ],
+    "title": "Category"
+   },
+   "CommentCreateIn": {
+    "properties": {
+     "body": {
+      "type": "string",
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Body"
+     },
+     "flair": {
+      "$ref": "#/components/schemas/CommentFlair",
+      "default": "support"
+     },
+     "parent_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Parent Id"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "body"
+    ],
+    "title": "CommentCreateIn"
+   },
+   "CommentFlair": {
+    "type": "string",
+    "enum": [
+     "advice",
+     "support",
+     "story"
+    ],
+    "title": "CommentFlair"
+   },
+   "CommentOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "post_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Post Id"
+     },
+     "parent_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Parent Id"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     },
+     "flair": {
+      "$ref": "#/components/schemas/CommentFlair"
+     },
+     "helpful_count": {
+      "type": "integer",
+      "title": "Helpful Count"
+     },
+     "my_helpful": {
+      "type": "boolean",
+      "title": "My Helpful"
+     },
+     "reply_count": {
+      "type": "integer",
+      "title": "Reply Count"
+     },
+     "is_op": {
+      "type": "boolean",
+      "title": "Is Op"
+     },
+     "is_pinned": {
+      "type": "boolean",
+      "title": "Is Pinned"
+     },
+     "is_own": {
+      "type": "boolean",
+      "title": "Is Own"
+     },
+     "deleted": {
+      "type": "boolean",
+      "title": "Deleted"
+     },
+     "moderation_state": {
+      "$ref": "#/components/schemas/ModerationState"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "edited_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Edited At"
+     },
+     "replies": {
+      "items": {
+       "oneOf": [
+        {
+         "$ref": "#/components/schemas/CommentOut"
+        },
+        {
+         "$ref": "#/components/schemas/AnonCommentOut"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Replies"
+     },
+     "is_anonymous": {
+      "type": "boolean",
+      "const": false,
+      "title": "Is Anonymous",
+      "default": false
+     },
+     "author": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/UserSummary"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "post_id",
+     "parent_id",
+     "body",
+     "flair",
+     "helpful_count",
+     "my_helpful",
+     "reply_count",
+     "is_op",
+     "is_pinned",
+     "is_own",
+     "deleted",
+     "moderation_state",
+     "created_at",
+     "edited_at",
+     "author"
+    ],
+    "title": "CommentOut"
+   },
+   "CommentPage": {
+    "properties": {
+     "items": {
+      "items": {
+       "oneOf": [
+        {
+         "$ref": "#/components/schemas/CommentOut"
+        },
+        {
+         "$ref": "#/components/schemas/AnonCommentOut"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "next_cursor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Next Cursor"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "next_cursor"
+    ],
+    "title": "CommentPage"
+   },
+   "CommentUpdateIn": {
+    "properties": {
+     "body": {
+      "type": "string",
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Body"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "body"
+    ],
+    "title": "CommentUpdateIn"
+   },
+   "ContentSettings": {
+    "properties": {
+     "muted_words": {
+      "items": {
+       "type": "string",
+       "maxLength": 40,
+       "minLength": 2
+      },
+      "type": "array",
+      "maxItems": 50,
+      "title": "Muted Words"
+     },
+     "muted_categories": {
+      "items": {
+       "$ref": "#/components/schemas/Category"
+      },
+      "type": "array",
+      "title": "Muted Categories"
+     },
+     "blur_sensitive_media": {
+      "type": "boolean",
+      "title": "Blur Sensitive Media",
+      "default": true
+     },
+     "hide_content_warning_posts": {
+      "type": "boolean",
+      "title": "Hide Content Warning Posts",
+      "default": false
+     },
+     "preferred_categories": {
+      "items": {
+       "$ref": "#/components/schemas/Category"
+      },
+      "type": "array",
+      "title": "Preferred Categories"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "title": "ContentSettings"
+   },
+   "DeleteAccountIn": {
+    "properties": {
+     "password": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 128
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Password"
+     },
+     "confirm": {
+      "type": "string",
+      "const": "DELETE",
+      "title": "Confirm"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "confirm"
+    ],
+    "title": "DeleteAccountIn"
+   },
+   "EmailChangeIn": {
+    "properties": {
+     "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email"
+     },
+     "password": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 128
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Password"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "email"
+    ],
+    "title": "EmailChangeIn"
+   },
+   "EmailIn": {
+    "properties": {
+     "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "email"
+    ],
+    "title": "EmailIn"
+   },
+   "EntityType": {
+    "type": "string",
+    "enum": [
+     "post",
+     "comment",
+     "user"
+    ],
+    "title": "EntityType"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "LoginIn": {
+    "properties": {
+     "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email"
+     },
+     "password": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Password"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "email",
+     "password"
+    ],
+    "title": "LoginIn"
+   },
+   "MarkReadIn": {
+    "properties": {
+     "ids": {
+      "items": {
+       "type": "string",
+       "format": "uuid"
+      },
+      "type": "array",
+      "maxItems": 100,
+      "title": "Ids"
+     },
+     "all": {
+      "type": "boolean",
+      "title": "All",
+      "default": false
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "title": "MarkReadIn"
+   },
+   "MeOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "email": {
+      "type": "string",
+      "title": "Email"
+     },
+     "email_verified": {
+      "type": "boolean",
+      "title": "Email Verified"
+     },
+     "handle": {
+      "type": "string",
+      "title": "Handle"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "headline": {
+      "type": "string",
+      "title": "Headline"
+     },
+     "bio": {
+      "type": "string",
+      "title": "Bio"
+     },
+     "profession": {
+      "type": "string",
+      "title": "Profession"
+     },
+     "location": {
+      "type": "string",
+      "title": "Location"
+     },
+     "frustrated_status": {
+      "type": "string",
+      "title": "Frustrated Status"
+     },
+     "links": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Links"
+     },
+     "avatar": {
+      "anyOf": [
+       {
+        "additionalProperties": {
+         "type": "string"
+        },
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avatar"
+     },
+     "cover": {
+      "anyOf": [
+       {
+        "additionalProperties": {
+         "type": "string"
+        },
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Cover"
+     },
+     "role": {
+      "$ref": "#/components/schemas/Role"
+     },
+     "status": {
+      "$ref": "#/components/schemas/UserStatus"
+     },
+     "suspended_until": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Suspended Until"
+     },
+     "onboarded": {
+      "type": "boolean",
+      "title": "Onboarded"
+     },
+     "has_password": {
+      "type": "boolean",
+      "title": "Has Password"
+     },
+     "google_linked": {
+      "type": "boolean",
+      "title": "Google Linked"
+     },
+     "helper_score": {
+      "type": "integer",
+      "title": "Helper Score"
+     },
+     "follower_count": {
+      "type": "integer",
+      "title": "Follower Count"
+     },
+     "following_count": {
+      "type": "integer",
+      "title": "Following Count"
+     },
+     "deletion_scheduled_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Deletion Scheduled At"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "email",
+     "email_verified",
+     "handle",
+     "display_name",
+     "headline",
+     "bio",
+     "profession",
+     "location",
+     "frustrated_status",
+     "links",
+     "avatar",
+     "cover",
+     "role",
+     "status",
+     "suspended_until",
+     "onboarded",
+     "has_password",
+     "google_linked",
+     "helper_score",
+     "follower_count",
+     "following_count",
+     "deletion_scheduled_at",
+     "created_at"
+    ],
+    "title": "MeOut"
+   },
+   "MediaKind": {
+    "type": "string",
+    "enum": [
+     "image",
+     "video"
+    ],
+    "title": "MediaKind"
+   },
+   "MediaOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/MediaKind"
+     },
+     "purpose": {
+      "$ref": "#/components/schemas/MediaPurpose"
+     },
+     "state": {
+      "$ref": "#/components/schemas/MediaState"
+     },
+     "urls": {
+      "additionalProperties": {
+       "type": "string"
+      },
+      "type": "object",
+      "title": "Urls"
+     },
+     "width": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Width"
+     },
+     "height": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Height"
+     },
+     "duration_seconds": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Duration Seconds"
+     },
+     "reject_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Reject Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "kind",
+     "purpose",
+     "state",
+     "urls",
+     "width",
+     "height",
+     "duration_seconds"
+    ],
+    "title": "MediaOut"
+   },
+   "MediaPurpose": {
+    "type": "string",
+    "enum": [
+     "post",
+     "avatar",
+     "cover"
+    ],
+    "title": "MediaPurpose"
+   },
+   "MediaState": {
+    "type": "string",
+    "enum": [
+     "uploading",
+     "processing",
+     "ready",
+     "rejected",
+     "deleted"
+    ],
+    "title": "MediaState"
+   },
+   "ModActionIn": {
+    "properties": {
+     "entity_type": {
+      "$ref": "#/components/schemas/EntityType"
+     },
+     "entity_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Entity Id"
+     },
+     "action": {
+      "type": "string",
+      "enum": [
+       "approve",
+       "remove",
+       "restore",
+       "dismiss_reports",
+       "strike",
+       "suspend",
+       "ban",
+       "unban"
+      ],
+      "title": "Action"
+     },
+     "reason": {
+      "type": "string",
+      "maxLength": 500,
+      "title": "Reason",
+      "default": ""
+     },
+     "suspend_days": {
+      "type": "integer",
+      "maximum": 365.0,
+      "minimum": 1.0,
+      "title": "Suspend Days",
+      "default": 7
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "entity_type",
+     "entity_id",
+     "action"
+    ],
+    "title": "ModActionIn"
+   },
+   "ModActionOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "moderator_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Moderator Id"
+     },
+     "target_user_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Target User Id"
+     },
+     "entity_type": {
+      "$ref": "#/components/schemas/EntityType"
+     },
+     "entity_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Entity Id"
+     },
+     "action": {
+      "type": "string",
+      "title": "Action"
+     },
+     "reason": {
+      "type": "string",
+      "title": "Reason"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "moderator_id",
+     "target_user_id",
+     "entity_type",
+     "entity_id",
+     "action",
+     "reason",
+     "created_at"
+    ],
+    "title": "ModActionOut"
+   },
+   "ModerationState": {
+    "type": "string",
+    "enum": [
+     "pending",
+     "pending_media",
+     "published",
+     "in_review",
+     "removed",
+     "rejected"
+    ],
+    "title": "ModerationState"
+   },
+   "NotificationOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "type": {
+      "type": "string",
+      "title": "Type"
+     },
+     "actor": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/UserSummary"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "post_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Post Id"
+     },
+     "comment_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Comment Id"
+     },
+     "data": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Data"
+     },
+     "read": {
+      "type": "boolean",
+      "title": "Read"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "type",
+     "actor",
+     "post_id",
+     "comment_id",
+     "data",
+     "read",
+     "created_at"
+    ],
+    "title": "NotificationOut"
+   },
+   "NotificationPage": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/NotificationOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "next_cursor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Next Cursor"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "next_cursor"
+    ],
+    "title": "NotificationPage"
+   },
+   "NotificationSettings": {
+    "properties": {
+     "reactions": {
+      "type": "boolean",
+      "title": "Reactions",
+      "default": true
+     },
+     "comments": {
+      "type": "boolean",
+      "title": "Comments",
+      "default": true
+     },
+     "replies": {
+      "type": "boolean",
+      "title": "Replies",
+      "default": true
+     },
+     "follows": {
+      "type": "boolean",
+      "title": "Follows",
+      "default": true
+     },
+     "solved": {
+      "type": "boolean",
+      "title": "Solved",
+      "default": true
+     },
+     "helpful": {
+      "type": "boolean",
+      "title": "Helpful",
+      "default": true
+     },
+     "email_digest": {
+      "type": "string",
+      "enum": [
+       "never",
+       "weekly"
+      ],
+      "title": "Email Digest",
+      "default": "never"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "title": "NotificationSettings"
+   },
+   "OkOut": {
+    "properties": {
+     "ok": {
+      "type": "boolean",
+      "title": "Ok",
+      "default": true
+     }
+    },
+    "type": "object",
+    "title": "OkOut"
+   },
+   "OnboardingIn": {
+    "properties": {
+     "handle": {
+      "type": "string",
+      "title": "Handle"
+     },
+     "display_name": {
+      "type": "string",
+      "maxLength": 50,
+      "minLength": 1,
+      "title": "Display Name"
+     },
+     "headline": {
+      "type": "string",
+      "maxLength": 120,
+      "title": "Headline",
+      "default": ""
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "handle",
+     "display_name"
+    ],
+    "title": "OnboardingIn"
+   },
+   "PostCreateIn": {
+    "properties": {
+     "title": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 3,
+      "title": "Title"
+     },
+     "body": {
+      "type": "string",
+      "maxLength": 5000,
+      "minLength": 1,
+      "title": "Body"
+     },
+     "category": {
+      "$ref": "#/components/schemas/Category"
+     },
+     "tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 10,
+      "title": "Tags"
+     },
+     "frustration_level": {
+      "type": "integer",
+      "maximum": 5.0,
+      "minimum": 1.0,
+      "title": "Frustration Level"
+     },
+     "is_anonymous": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Is Anonymous"
+     },
+     "content_warning": {
+      "type": "boolean",
+      "title": "Content Warning",
+      "default": false
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "open",
+       "seeking_advice"
+      ],
+      "title": "Status",
+      "default": "open"
+     },
+     "media_ids": {
+      "items": {
+       "type": "string",
+       "format": "uuid"
+      },
+      "type": "array",
+      "maxItems": 4,
+      "title": "Media Ids"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "title",
+     "body",
+     "category",
+     "frustration_level"
+    ],
+    "title": "PostCreateIn"
+   },
+   "PostOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     },
+     "category": {
+      "$ref": "#/components/schemas/Category"
+     },
+     "tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Tags"
+     },
+     "frustration_level": {
+      "type": "integer",
+      "title": "Frustration Level"
+     },
+     "status": {
+      "$ref": "#/components/schemas/PostStatus"
+     },
+     "moderation_state": {
+      "$ref": "#/components/schemas/ModerationState"
+     },
+     "content_warning": {
+      "type": "boolean",
+      "title": "Content Warning"
+     },
+     "show_crisis_resources": {
+      "type": "boolean",
+      "title": "Show Crisis Resources"
+     },
+     "media": {
+      "items": {
+       "$ref": "#/components/schemas/MediaOut"
+      },
+      "type": "array",
+      "title": "Media"
+     },
+     "reactions": {
+      "$ref": "#/components/schemas/ReactionCounts"
+     },
+     "my_reaction": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ReactionKind"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "comment_count": {
+      "type": "integer",
+      "title": "Comment Count"
+     },
+     "pinned_comment_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Pinned Comment Id"
+     },
+     "solved_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Solved At"
+     },
+     "link_preview": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Link Preview"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "edited_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Edited At"
+     },
+     "is_own": {
+      "type": "boolean",
+      "title": "Is Own"
+     },
+     "can_edit": {
+      "type": "boolean",
+      "title": "Can Edit"
+     },
+     "is_anonymous": {
+      "type": "boolean",
+      "const": false,
+      "title": "Is Anonymous",
+      "default": false
+     },
+     "author": {
+      "$ref": "#/components/schemas/UserSummary"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "body",
+     "category",
+     "tags",
+     "frustration_level",
+     "status",
+     "moderation_state",
+     "content_warning",
+     "show_crisis_resources",
+     "media",
+     "reactions",
+     "my_reaction",
+     "comment_count",
+     "pinned_comment_id",
+     "solved_at",
+     "link_preview",
+     "created_at",
+     "edited_at",
+     "is_own",
+     "can_edit",
+     "author"
+    ],
+    "title": "PostOut"
+   },
+   "PostPage": {
+    "properties": {
+     "items": {
+      "items": {
+       "oneOf": [
+        {
+         "$ref": "#/components/schemas/PostOut"
+        },
+        {
+         "$ref": "#/components/schemas/AnonPostOut"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "next_cursor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Next Cursor"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "next_cursor"
+    ],
+    "title": "PostPage"
+   },
+   "PostStatus": {
+    "type": "string",
+    "enum": [
+     "open",
+     "seeking_advice",
+     "solved"
+    ],
+    "title": "PostStatus"
+   },
+   "PostUpdateIn": {
+    "properties": {
+     "title": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120,
+        "minLength": 3
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "body": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 5000,
+        "minLength": 1
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Body"
+     },
+     "category": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Category"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "tags": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array",
+        "maxItems": 10
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Tags"
+     },
+     "frustration_level": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 5.0,
+        "minimum": 1.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Frustration Level"
+     },
+     "content_warning": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Content Warning"
+     },
+     "status": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "open",
+         "seeking_advice"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "title": "PostUpdateIn"
+   },
+   "PrivacySettings": {
+    "properties": {
+     "default_anonymous": {
+      "type": "boolean",
+      "title": "Default Anonymous",
+      "default": false
+     },
+     "who_can_comment": {
+      "type": "string",
+      "enum": [
+       "everyone",
+       "followers",
+       "none"
+      ],
+      "title": "Who Can Comment",
+      "default": "everyone"
+     },
+     "hide_profession": {
+      "type": "boolean",
+      "title": "Hide Profession",
+      "default": false
+     },
+     "hide_location": {
+      "type": "boolean",
+      "title": "Hide Location",
+      "default": false
+     },
+     "searchable": {
+      "type": "boolean",
+      "title": "Searchable",
+      "default": true
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "title": "PrivacySettings"
+   },
+   "ProfileOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "handle": {
+      "type": "string",
+      "title": "Handle"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "headline": {
+      "type": "string",
+      "title": "Headline"
+     },
+     "bio": {
+      "type": "string",
+      "title": "Bio"
+     },
+     "profession": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Profession"
+     },
+     "location": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Location"
+     },
+     "frustrated_status": {
+      "type": "string",
+      "title": "Frustrated Status"
+     },
+     "links": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Links"
+     },
+     "avatar": {
+      "anyOf": [
+       {
+        "additionalProperties": {
+         "type": "string"
+        },
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avatar"
+     },
+     "cover": {
+      "anyOf": [
+       {
+        "additionalProperties": {
+         "type": "string"
+        },
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Cover"
+     },
+     "helper_score": {
+      "type": "integer",
+      "title": "Helper Score"
+     },
+     "follower_count": {
+      "type": "integer",
+      "title": "Follower Count"
+     },
+     "following_count": {
+      "type": "integer",
+      "title": "Following Count"
+     },
+     "post_count": {
+      "type": "integer",
+      "title": "Post Count"
+     },
+     "solved_count": {
+      "type": "integer",
+      "title": "Solved Count"
+     },
+     "badges": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Badges"
+     },
+     "joined_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Joined At"
+     },
+     "is_me": {
+      "type": "boolean",
+      "title": "Is Me"
+     },
+     "is_following": {
+      "type": "boolean",
+      "title": "Is Following"
+     },
+     "follows_you": {
+      "type": "boolean",
+      "title": "Follows You"
+     },
+     "is_blocked": {
+      "type": "boolean",
+      "title": "Is Blocked"
+     },
+     "is_muted": {
+      "type": "boolean",
+      "title": "Is Muted"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "handle",
+     "display_name",
+     "headline",
+     "bio",
+     "profession",
+     "location",
+     "frustrated_status",
+     "links",
+     "avatar",
+     "cover",
+     "helper_score",
+     "follower_count",
+     "following_count",
+     "post_count",
+     "solved_count",
+     "badges",
+     "joined_at",
+     "is_me",
+     "is_following",
+     "follows_you",
+     "is_blocked",
+     "is_muted"
+    ],
+    "title": "ProfileOut"
+   },
+   "ProfileUpdateIn": {
+    "properties": {
+     "handle": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Handle"
+     },
+     "display_name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 50,
+        "minLength": 1
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Display Name"
+     },
+     "headline": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Headline"
+     },
+     "bio": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 300
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Bio"
+     },
+     "profession": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 80
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Profession"
+     },
+     "location": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 80
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Location"
+     },
+     "frustrated_status": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 100
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Frustrated Status"
+     },
+     "links": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string",
+         "maxLength": 2083,
+         "minLength": 1,
+         "format": "uri"
+        },
+        "type": "array",
+        "maxItems": 3
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Links"
+     },
+     "avatar_media_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avatar Media Id"
+     },
+     "cover_media_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Cover Media Id"
+     },
+     "remove_avatar": {
+      "type": "boolean",
+      "title": "Remove Avatar",
+      "default": false
+     },
+     "remove_cover": {
+      "type": "boolean",
+      "title": "Remove Cover",
+      "default": false
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "title": "ProfileUpdateIn"
+   },
+   "QueueItemOut": {
+    "properties": {
+     "entity_type": {
+      "$ref": "#/components/schemas/EntityType"
+     },
+     "entity_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Entity Id"
+     },
+     "moderation_state": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ModerationState"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "moderation_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Moderation Reason"
+     },
+     "title": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     },
+     "is_anonymous": {
+      "type": "boolean",
+      "title": "Is Anonymous"
+     },
+     "author": {
+      "$ref": "#/components/schemas/UserSummary"
+     },
+     "report_count": {
+      "type": "integer",
+      "title": "Report Count"
+     },
+     "report_weight": {
+      "type": "number",
+      "title": "Report Weight"
+     },
+     "report_reasons": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Report Reasons"
+     },
+     "flags": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Flags"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "entity_type",
+     "entity_id",
+     "moderation_state",
+     "moderation_reason",
+     "title",
+     "body",
+     "is_anonymous",
+     "author",
+     "report_count",
+     "report_weight",
+     "report_reasons",
+     "flags",
+     "created_at"
+    ],
+    "title": "QueueItemOut"
+   },
+   "QueueOut": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/QueueItemOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "next_cursor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Next Cursor"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "next_cursor"
+    ],
+    "title": "QueueOut"
+   },
+   "ReactionCounts": {
+    "properties": {
+     "same": {
+      "type": "integer",
+      "title": "Same"
+     },
+     "hug": {
+      "type": "integer",
+      "title": "Hug"
+     },
+     "rage": {
+      "type": "integer",
+      "title": "Rage"
+     },
+     "lol": {
+      "type": "integer",
+      "title": "Lol"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     }
+    },
+    "type": "object",
+    "required": [
+     "same",
+     "hug",
+     "rage",
+     "lol",
+     "total"
+    ],
+    "title": "ReactionCounts"
+   },
+   "ReactionIn": {
+    "properties": {
+     "kind": {
+      "$ref": "#/components/schemas/ReactionKind"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "kind"
+    ],
+    "title": "ReactionIn"
+   },
+   "ReactionKind": {
+    "type": "string",
+    "enum": [
+     "same",
+     "hug",
+     "rage",
+     "lol"
+    ],
+    "title": "ReactionKind"
+   },
+   "ReportIn": {
+    "properties": {
+     "entity_type": {
+      "$ref": "#/components/schemas/EntityType"
+     },
+     "entity_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Entity Id"
+     },
+     "reason": {
+      "$ref": "#/components/schemas/ReportReason"
+     },
+     "note": {
+      "type": "string",
+      "maxLength": 500,
+      "title": "Note",
+      "default": ""
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "entity_type",
+     "entity_id",
+     "reason"
+    ],
+    "title": "ReportIn"
+   },
+   "ReportReason": {
+    "type": "string",
+    "enum": [
+     "harassment",
+     "hate",
+     "threat",
+     "doxxing",
+     "self_harm",
+     "sexual",
+     "spam",
+     "other"
+    ],
+    "title": "ReportReason"
+   },
+   "ResetPasswordIn": {
+    "properties": {
+     "token": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 10,
+      "title": "Token"
+     },
+     "password": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 10,
+      "title": "Password"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "token",
+     "password"
+    ],
+    "title": "ResetPasswordIn"
+   },
+   "Role": {
+    "type": "string",
+    "enum": [
+     "user",
+     "mod",
+     "admin"
+    ],
+    "title": "Role"
+   },
+   "SearchOut": {
+    "properties": {
+     "posts": {
+      "items": {
+       "oneOf": [
+        {
+         "$ref": "#/components/schemas/PostOut"
+        },
+        {
+         "$ref": "#/components/schemas/AnonPostOut"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Posts"
+     },
+     "users": {
+      "items": {
+       "$ref": "#/components/schemas/UserSummary"
+      },
+      "type": "array",
+      "title": "Users"
+     },
+     "tags": {
+      "items": {
+       "$ref": "#/components/schemas/TagOut"
+      },
+      "type": "array",
+      "title": "Tags"
+     },
+     "next_cursor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Next Cursor"
+     }
+    },
+    "type": "object",
+    "required": [
+     "posts",
+     "users",
+     "tags",
+     "next_cursor"
+    ],
+    "title": "SearchOut"
+   },
+   "SessionOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "user_agent": {
+      "type": "string",
+      "title": "User Agent"
+     },
+     "ip": {
+      "type": "string",
+      "title": "Ip"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "last_used_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last Used At"
+     },
+     "current": {
+      "type": "boolean",
+      "title": "Current",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "user_agent",
+     "ip",
+     "created_at",
+     "last_used_at"
+    ],
+    "title": "SessionOut"
+   },
+   "SetPasswordIn": {
+    "properties": {
+     "password": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 10,
+      "title": "Password"
+     },
+     "current_password": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 128
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Current Password"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "password"
+    ],
+    "title": "SetPasswordIn"
+   },
+   "SettingsOut": {
+    "properties": {
+     "privacy": {
+      "$ref": "#/components/schemas/PrivacySettings"
+     },
+     "notifications": {
+      "$ref": "#/components/schemas/NotificationSettings"
+     },
+     "content": {
+      "$ref": "#/components/schemas/ContentSettings"
+     }
+    },
+    "type": "object",
+    "required": [
+     "privacy",
+     "notifications",
+     "content"
+    ],
+    "title": "SettingsOut"
+   },
+   "SettingsPatchIn": {
+    "properties": {
+     "privacy": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/PrivacySettings"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "notifications": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/NotificationSettings"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "content": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ContentSettings"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "title": "SettingsPatchIn"
+   },
+   "SignupIn": {
+    "properties": {
+     "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email"
+     },
+     "password": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 10,
+      "title": "Password"
+     },
+     "handle": {
+      "type": "string",
+      "title": "Handle"
+     },
+     "display_name": {
+      "type": "string",
+      "maxLength": 50,
+      "minLength": 1,
+      "title": "Display Name"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "email",
+     "password",
+     "handle",
+     "display_name"
+    ],
+    "title": "SignupIn"
+   },
+   "SolveIn": {
+    "properties": {
+     "comment_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Comment Id"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "title": "SolveIn"
+   },
+   "TagOut": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "post_count": {
+      "type": "integer",
+      "title": "Post Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "post_count"
+    ],
+    "title": "TagOut"
+   },
+   "TokenIn": {
+    "properties": {
+     "token": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 10,
+      "title": "Token"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "token"
+    ],
+    "title": "TokenIn"
+   },
+   "TokenOut": {
+    "properties": {
+     "access_token": {
+      "type": "string",
+      "title": "Access Token"
+     },
+     "token_type": {
+      "type": "string",
+      "const": "bearer",
+      "title": "Token Type",
+      "default": "bearer"
+     },
+     "expires_in": {
+      "type": "integer",
+      "title": "Expires In"
+     },
+     "user": {
+      "$ref": "#/components/schemas/MeOut"
+     }
+    },
+    "type": "object",
+    "required": [
+     "access_token",
+     "expires_in",
+     "user"
+    ],
+    "title": "TokenOut"
+   },
+   "TopicIn": {
+    "properties": {
+     "topic": {
+      "type": "string",
+      "pattern": "^(category|tag):[a-z0-9_-]{2,30}$",
+      "title": "Topic"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "topic"
+    ],
+    "title": "TopicIn"
+   },
+   "TopicsOut": {
+    "properties": {
+     "topics": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Topics"
+     }
+    },
+    "type": "object",
+    "required": [
+     "topics"
+    ],
+    "title": "TopicsOut"
+   },
+   "UnreadCountOut": {
+    "properties": {
+     "unread": {
+      "type": "integer",
+      "title": "Unread"
+     }
+    },
+    "type": "object",
+    "required": [
+     "unread"
+    ],
+    "title": "UnreadCountOut"
+   },
+   "UploadUrlIn": {
+    "properties": {
+     "kind": {
+      "$ref": "#/components/schemas/MediaKind"
+     },
+     "purpose": {
+      "$ref": "#/components/schemas/MediaPurpose",
+      "default": "post"
+     },
+     "mime": {
+      "type": "string",
+      "maxLength": 64,
+      "title": "Mime"
+     },
+     "size_bytes": {
+      "type": "integer",
+      "exclusiveMinimum": 0.0,
+      "title": "Size Bytes"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "kind",
+     "mime",
+     "size_bytes"
+    ],
+    "title": "UploadUrlIn"
+   },
+   "UploadUrlOut": {
+    "properties": {
+     "media_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Media Id"
+     },
+     "upload_url": {
+      "type": "string",
+      "title": "Upload Url"
+     },
+     "method": {
+      "type": "string",
+      "const": "PUT",
+      "title": "Method",
+      "default": "PUT"
+     },
+     "headers": {
+      "additionalProperties": {
+       "type": "string"
+      },
+      "type": "object",
+      "title": "Headers"
+     },
+     "expires_in": {
+      "type": "integer",
+      "title": "Expires In"
+     }
+    },
+    "type": "object",
+    "required": [
+     "media_id",
+     "upload_url",
+     "headers",
+     "expires_in"
+    ],
+    "title": "UploadUrlOut"
+   },
+   "UserPage": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/UserSummary"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "next_cursor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Next Cursor"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "next_cursor"
+    ],
+    "title": "UserPage"
+   },
+   "UserStatus": {
+    "type": "string",
+    "enum": [
+     "active",
+     "suspended",
+     "banned",
+     "deleted"
+    ],
+    "title": "UserStatus"
+   },
+   "UserSummary": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "handle": {
+      "type": "string",
+      "title": "Handle"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "headline": {
+      "type": "string",
+      "title": "Headline"
+     },
+     "avatar": {
+      "anyOf": [
+       {
+        "additionalProperties": {
+         "type": "string"
+        },
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avatar"
+     },
+     "helper_score": {
+      "type": "integer",
+      "title": "Helper Score"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "handle",
+     "display_name",
+     "headline",
+     "helper_score"
+    ],
+    "title": "UserSummary"
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   }
+  }
+ }
+}

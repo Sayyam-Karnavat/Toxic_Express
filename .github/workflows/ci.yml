@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: { POSTGRES_USER: toxic, POSTGRES_PASSWORD: toxic, POSTGRES_DB: toxic_express }
+        ports: ["5433:5432"]
+        options: --health-cmd "pg_isready -U toxic" --health-interval 3s --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports: ["6380:6379"]
+        options: --health-cmd "redis-cli ping" --health-interval 3s --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start S3-compatible storage
+        working-directory: .
+        run: |
+          docker run -d --name s3 -p 8333:8333 -v "$PWD/infra/s3-dev.json:/etc/seaweedfs/s3.json:ro" \
+            chrislusf/seaweedfs:latest server -dir=/data -s3 -s3.port=8333 -s3.config=/etc/seaweedfs/s3.json
+          for i in $(seq 1 60); do curl -s -o /dev/null http://localhost:8333 && break; sleep 1; done
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --frozen
+      - run: uv run ruff format --check .
+      - run: uv run ruff check .
+      - run: uv run pyright
+      - run: uv run alembic check || true  # informational; tests apply migrations to a fresh DB
+      - run: uv run coverage run -m pytest -q
+      - run: uv run coverage report --fail-under=85
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: npm ci
+      - run: npx tsc -b
+      - run: npm run lint
+      - run: npm run check:tokens
+      - run: npm test
+      - run: npm run build

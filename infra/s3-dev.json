@@ -1,0 +1,13 @@
+{
+  "identities": [
+    {
+      "name": "toxic-dev",
+      "credentials": [{ "accessKey": "devaccesskey", "secretKey": "devsecretkey123" }],
+      "actions": ["Admin", "Read", "Write", "List", "Tagging"]
+    },
+    {
+      "name": "anonymous",
+      "actions": ["Read:te-media-public", "Read:te-test-public"]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+# Cloudflare Pages response headers. Replace api.toxic-express.app / media.toxic-express.app and the
+# R2 S3 endpoint (<account>.r2.cloudflarestorage.com) with your own domains before deploying.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://media.toxic-express.app; media-src 'self' blob: https://media.toxic-express.app; connect-src 'self' https://api.toxic-express.app https://*.r2.cloudflarestorage.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.toxic-express.app
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

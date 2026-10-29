@@ -1,0 +1,2 @@
+# One term per line (case-insensitive, whole-word). Matching content is rejected before posting.
+# Keep this list for unambiguous slurs/terms; contextual cases are left to the moderation API.
